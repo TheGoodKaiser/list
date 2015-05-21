@@ -7,12 +7,13 @@ function change () {
 	document.getElementById("button").innerHTML = "Submit";
 }
 
+
 function click (obj) {
-	document.getElementById("button").innerHTML = "Done";
 	console.log(obj);
 	console.log(this);
 	setTimeout(change, 500);
 	if(input.value !== "") {
+		document.getElementById("button").innerHTML = "Done";
 		list.innerHTML = list.innerHTML + "<li>" + input.value + "</li>";
 	}
 	input.value="";
@@ -20,11 +21,11 @@ function click (obj) {
 }
 function push (obj) {
 	if (event.keyCode === 13) {
-		document.getElementById("button").innerHTML = "Done";
 		console.log(obj);
 		console.log(this);
 		setTimeout(change, 500);
 		if(input.value !== "") {
+			document.getElementById("button").innerHTML = "Done";
 			list.innerHTML = list.innerHTML + "<li>" + input.value + "</li>";
 		}
 		input.value="";
@@ -32,5 +33,16 @@ function push (obj) {
 	}
 }
 
+function revert() {
+	document.getElementById("text").style.backgroundColor = 'white';
+}
+
+function color() {
+	document.getElementById("text").style.backgroundColor = 'lightblue';
+}
+
+
 button.addEventListener('click', click);
-input.addEventListener('keyup', push)
+input.addEventListener('keyup', push);
+input.addEventListener('mouseover', color);
+input.addEventListener('mouseleave', revert);
