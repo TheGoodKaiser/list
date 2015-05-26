@@ -1,48 +1,58 @@
-var input = document.getElementById("text");
-var button = document.getElementById("button");
-var list = document.getElementById("list");
-list.innerHTML = sessionStorage.getItem('list.innerHTML');
+$(document).on("ready", start);
 
-function change () {
-	document.getElementById("button").innerHTML = "Submit";
-}
+function start(e) {
+	var $input = $('#text');
+	var $button = $('#button');
+	var $list = $('#list');
+	var list = [];
+	var counter = 0;
+	$list.html = sessionStorage.getItem('$list.html');
 
-
-function click (obj) {
-	console.log(obj);
-	console.log(this);
-	setTimeout(change, 500);
-	if(input.value !== "") {
-		document.getElementById("button").innerHTML = "Done";
-		list.innerHTML = list.innerHTML + "<li>" + input.value + "</li>";
+	function change () {
+		$button.html("Submit");
 	}
-	input.value="";
-	sessionStorage.setItem('list.innerHTML', list.innerHTML);
-}
-function push (obj) {
-	if (event.keyCode === 13) {
-		console.log(obj);
-		console.log(this);
+	function empty() {
+		$input.val("");	
+	}
+	function render(todoList) {
+		return '<ul><li class = \"todo\">'+todoList.join('</li><li>')+'</li></ul>';
+	}
+	function through(item) {
+		return "<strike>"+item+"</strike>";
+	}
+	function strike() {
+		var i = $('.todo').index(this);
+			list[i] = through(list[i]);
+			var listHtml = render(list);
+			$('#list').html(listHtml);
+			console.log('ugh');
+	}
+
+	function click (obj) {
 		setTimeout(change, 500);
-		if(input.value !== "") {
-			document.getElementById("button").innerHTML = "Done";
-			list.innerHTML = list.innerHTML + "<li>" + input.value + "</li>";
+		if($input.val !== "") {
+			$button.html("Done");
+			list.push($input.val());
+			var listHtml = render(list);
+			$('#list').html(listHtml);
 		}
-		input.value="";
-		sessionStorage.setItem('list.innerHTML', list.innerHTML);
+		empty()
+		sessionStorage.setItem('$list.html', $list.html);
 	}
+	function push (obj) {
+		if (event.keyCode === 13) {
+				setTimeout(change, 500);
+			if($input.val !== "") {
+			$button.html("Done");
+			list.push($input.val());
+			var listHtml = render(list);
+			$('#list').html(listHtml);
+			}
+			empty()
+			sessionStorage.setItem('$list.html', $list.html);
+		}
+	}
+	$("#button").on('click', click);
+	$("#text").keyup(push);
+	$('#list').on("click", strike);
 }
-
-function revert() {
-	document.getElementById("text").style.backgroundColor = 'white';
-}
-
-function color() {
-	document.getElementById("text").style.backgroundColor = 'lightblue';
-}
-
-
-button.addEventListener('click', click);
-input.addEventListener('keyup', push);
-input.addEventListener('mouseover', color);
-input.addEventListener('mouseleave', revert);
