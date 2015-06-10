@@ -15,17 +15,15 @@ function start(e) {
 		$input.val("");	
 	}
 	function render(todoList) {
-		return '<ul><li class = \"todo\">'+todoList.join('</li><li>')+'</li></ul>';
+		return '<ul><li class = "todo">'+todoList.join('</li><li>')+'</li></ul>';
 	}
-	function through(item) {
-		return "<strike>"+item+"</strike>";
-	}
-	function strike() {
-		var i = $('.todo').index(this);
-			list[i] = through(list[i]);
-			var listHtml = render(list);
-			$('#list').html(listHtml);
-			console.log('ugh');
+	// function through(item) {
+	// 	item.html("<strike>"+item.html()+"</strike>");
+	// }
+	function strike(e) {
+		var i = e.target;
+		// through(i);
+		(e.target).style.textDecoration = "line-through";
 	}
 
 	function click (obj) {
@@ -36,7 +34,7 @@ function start(e) {
 			var listHtml = render(list);
 			$('#list').html(listHtml);
 		}
-		empty()
+		empty();
 		sessionStorage.setItem('$list.html', $list.html);
 	}
 	function push (obj) {
